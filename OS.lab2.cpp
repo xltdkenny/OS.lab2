@@ -10,11 +10,11 @@
 
 int server_sock = -1;
 int client_socket = -1;
-volatile sig_atomic_t running = 1;
+volatile sig_atomic_t wasSigHup = 1;
 
 void handleTerminationSignal(int sig) 
 {
-    running = 0;
+    wasSigHup = 0;
 }
 
 int main() 
@@ -56,7 +56,7 @@ int main()
     sigaddset(&blockedMask, SIGHUP);
     sigprocmask(SIG_BLOCK, &blockedMask, &origMask);
 
-    while (running) 
+    while (wasSigHup) 
     {
         fd_set read_fds;
         FD_ZERO(&read_fds);
@@ -81,7 +81,7 @@ int main()
         {
             if (errno == EINTR) 
             {
-                if (!running)
+                if (!wasSigHup)
                 {
                 printf("SIGHUP");
                 }
