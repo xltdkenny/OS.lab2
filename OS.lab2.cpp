@@ -81,6 +81,10 @@ int main()
         {
             if (errno == EINTR) 
             {
+                if (!running)
+                {
+                printf("SIGHUP");
+                }
                 continue;
             } 
             
