@@ -25,7 +25,7 @@ int main()
     struct sigaction sa;
     memset(&sa, 0, sizeof(sa));
     sa.sa_handler = handleTerminationSignal;
-    sigaction(SIGHUP, &sa, NULL);
+    sigaction(SIGHUP, &sa, nullptr);
 
     server_sock = socket(AF_INET, SOCK_STREAM, 0);
     if (server_sock == -1) 
@@ -77,7 +77,7 @@ int main()
                 }
         }
 
-        if (pselect(max_fd + 1, &read_fds, NULL, NULL, NULL, &origMask) < 0) 
+        if (pselect(max_fd + 1, &read_fds, nullptr, nullptr, nullptr, &origMask) < 0) 
         {
             if (errno == EINTR) 
             {
@@ -96,7 +96,7 @@ int main()
         }
 
         if (FD_ISSET(server_sock, &read_fds)) {
-            if ((new_socket = accept(server_sock, NULL, NULL)) < 0) 
+            if ((new_socket = accept(server_sock, nullptr, nullptr)) < 0) 
             {
                 perror("accept");
                 exit(EXIT_FAILURE);
